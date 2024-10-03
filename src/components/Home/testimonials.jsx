@@ -14,15 +14,15 @@ import testi10 from '../../assets/testi10.png';
 
 
 const testimonials = [
-    { name: 'Harsh', text: 'Neuform delivered excellent results in less time than expected. Their efficiency and expertise are unmatched.', img: testi1, rating: 5 },
-    { name: 'Pratham', text: "I've experienced good working relationships with Neuform. Their team is professional and always ready to help.", img: testi2, rating: 4 },
-    { name: 'Sarah', text: "My business grew online very fast with Neuform's help. They know how to drive growth.", img: testi3, rating: 5 },
-    { name: 'Jeet', text: 'With Neuform, I have more sales through Instagram compared to offline. Their social media management is top-notch.', img: testi4, rating: 5 },
-    { name: 'Parag', text: 'Neuform offers great customer care. They are always attentive and responsive to my needs.', img: testi5, rating: 4 },
-    { name: 'Krishna', text: 'I love to work with Neuform. Their team is dedicated, and the results speak for themselves.', img: testi6, rating: 5 },
-    { name: 'Laura ', text: 'Neuform made my website in the shortest time compared to others. Their speed and quality are impressive.', img: testi7, rating: 5 },
-    { name: 'Jay', text: 'Their good maintenance service keeps my website running smoothly. I can always count on Neuform.', img: testi8, rating: 5 },
-    { name: 'Henry', text: 'I saw good results in less time with Neuform. They truly understand the digital landscape.', img: testi9, rating: 5 },
+    { name: 'Harsh', text: 'Neuform delivered excellent results in less time than expected. Their efficiency and expertise are unmatched.', img: testi10, rating: 5 },
+    { name: 'Pratham', text: "I've experienced good working relationships with Neuform. Their team is professional and always ready to help.", img:testi10, rating: 4 },
+    { name: 'Sarah', text: "My business grew online very fast with Neuform's help. They know how to drive growth.", img:testi10, rating: 3},
+    { name: 'Jeet', text: 'With Neuform, I have more sales through Instagram compared to offline. Their social media management is top-notch.', img: testi10, rating: 5 },
+    { name: 'Parag', text: 'Neuform offers great customer care. They are always attentive and responsive to my needs.', img: testi10, rating: 4 },
+    { name: 'Krishna', text: 'I love to work with Neuform. Their team is dedicated, and the results speak for themselves.', img: testi10, rating: 5 },
+    { name: 'Laura ', text: 'Neuform made my website in the shortest time compared to others. Their speed and quality are impressive.', img: testi10, rating: 5 },
+    { name: 'Jay', text: 'Their good maintenance service keeps my website running smoothly. I can always count on Neuform.', img: testi10, rating: 4 },
+    { name: 'Henry', text: 'I saw good results in less time with Neuform. They truly understand the digital landscape.', img: testi10, rating: 5 },
     { name: 'Rohit', text: 'Neuform provides good working solutions that are both innovative and effective.', img: testi10, rating: 4 },
 ];
 

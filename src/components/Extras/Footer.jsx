@@ -15,15 +15,7 @@ const Footer = () => {
             />
             <p className="text-2xl font-semibold">NeuForm</p>
           </div>
-          <div className="tab-2 flex items-center space-x-2">
-            <img
-              width="16"
-              height="16"
-              src="https://img.icons8.com/tiny-color/16/home.png"
-              alt="Location"
-            />
-            <p className="text-sm text-gray-400 font-semibold">Banglore, India</p>
-          </div>
+          
           <div className="tab-3 flex items-center space-x-2">
             <img
               width="16"
@@ -90,10 +82,15 @@ const Footer = () => {
           <div className="tab-1 flex items-center space-x-4">
             <p className="text-2xl font-semibold">MORE</p>
           </div>
-          <a href="https://www.linkedin.com/in/neuform-technologies-434740322/" className="tab-2 flex items-center space-x-2" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.linkedin.com/company/neuform-technologies/" className="tab-2 flex items-center space-x-2" target="_blank" rel="noopener noreferrer">
             <p className="text-sm text-gray-400 font-semibold">Linked In</p>
           </a>
-         
+          <a href="https://www.instagram.com/neuformtech/" className="tab-2 flex items-center space-x-2" target="_blank" rel="noopener noreferrer">
+            <p className="text-sm text-gray-400 font-semibold">Instagram</p>
+          </a>
+          <a href="https://wa.link/od4gnv" className="tab-2 flex items-center space-x-2" target="_blank" rel="noopener noreferrer">
+            <p className="text-sm text-gray-400 font-semibold">WhatsApp</p>
+          </a>
         </div>
       </div>
     </div>

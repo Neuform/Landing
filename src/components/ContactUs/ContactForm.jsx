@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { inquiryForm } from '../../state/Forms/Action';
+
 
 const CustomMultiSelect = ({ options, selected, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+
 
   return (
     <div className="relative">
@@ -47,6 +52,8 @@ const ContactForm = () => {
   });
   const [errors, setErrors] = useState({});
   const [showAlert, setShowAlert] = useState(false);
+const dispatch = useDispatch()
+
 
   const services = [
     'Website Development', 'Mobile App Development', 'SEO',
@@ -78,6 +85,7 @@ const ContactForm = () => {
   };
 
   const validateForm = () => {
+
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
     if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
@@ -90,6 +98,7 @@ const ContactForm = () => {
   };
 
   const handleSubmit = (e) => {
+
     e.preventDefault();
     if (validateForm()) {
       const sanitizedData = Object.entries(formData).reduce((acc, [key, value]) => {
@@ -97,9 +106,20 @@ const ContactForm = () => {
         return acc;
       }, {});
       console.log('Form submitted:', sanitizedData);
+      console.log(sanitizedData.email)
       // Here you would typically send the sanitizedData to your server
       setShowAlert(true);
       setTimeout(() => setShowAlert(false), 3000); // Hide alert after 3 seconds
+      let data = {
+        name:sanitizedData.name,
+        address:sanitizedData.address,
+        email:sanitizedData.email,
+        phone:sanitizedData.phone,
+        message:sanitizedData.message,
+        service:sanitizedData.services.join(', ') 
+      }
+      console.log('data object',data)
+      dispatch(inquiryForm(data))
     }
   };
 

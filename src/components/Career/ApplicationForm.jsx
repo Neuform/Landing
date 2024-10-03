@@ -1,8 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import image from '../../assets/logolistback.png';
 import '../../App.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { applicationForm } from '../../state/Forms/Action';
+import { IKContext, IKUpload } from 'imagekitio-react';
+import authenticator from '../../config/imageKit';
 
 const ApplyForPosition = () => {
+
+  const {form} = useSelector(store=>store)
+  const dispatch = useDispatch()
+
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,11 +20,13 @@ const ApplyForPosition = () => {
     city: '',
     pincode: '',
     position: '',
-    roles: []
+    roles: [],
+    resume: '',  // To hold uploaded resume URL
   });
   const [errors, setErrors] = useState({});
   const [isRolesDropdownOpen, setIsRolesDropdownOpen] = useState(false);
   const rolesDropdownRef = useRef(null);
+  const [uploading, setUploading] = useState(false);  // To track file uploading status
 
   const roles = [
     'Ad Maker', 'Android Developer', 'Backend Developer', 'Cloud Engineer', 'Community Manager',
@@ -88,6 +99,7 @@ const ApplyForPosition = () => {
     if (formData.roles.length === 0) {
       newErrors.roles = 'At least one role must be selected';
     }
+    if (!formData.resume) newErrors.resume = 'Resume upload is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -114,35 +126,64 @@ const ApplyForPosition = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const recipient = "neuformtech@gmail.com";
-      const subject = encodeURIComponent(`${formData.position} Application for ${formData.roles.join(', ')} at Neuform`);
-      const body = encodeURIComponent(`Greetings Neuform,
+//       const recipient = "neuformtech@gmail.com";
+//       const subject = encodeURIComponent(`${formData.position} Application for ${formData.roles.join(', ')} at Neuform`);
+//       const body = encodeURIComponent(`Greetings Neuform,
 
-My name is ${formData.name}, and I am excited to apply for the following role(s) ${formData.position} position at Neuform:
+// My name is ${formData.name}, and I am excited to apply for the following role(s) ${formData.position} position at Neuform:
 
-${formData.roles.join('\n')}
+// ${formData.roles.join('\n')}
 
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Address: ${formData.address}
-City: ${formData.city}
-Pincode: ${formData.pincode}
+// Name: ${formData.name}
+// Email: ${formData.email}
+// Phone: ${formData.phone}
+// Address: ${formData.address}
+// City: ${formData.city}
+// Pincode: ${formData.pincode}
 
-Thank you for considering my application. I look forward to the opportunity to discuss how I can contribute to Neuform.
-Resume Attached :-
-Best regards,
-${formData.name}`);
+// Thank you for considering my application. I look forward to the opportunity to discuss how I can contribute to Neuform.
+// Resume Attached :-
+// Best regards,
+// ${formData.name}`);
 
-      const gmailComposeURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`;
+//       const gmailComposeURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`;
       
-      alert("You will now be redirected to Gmail to complete your application. Please remember to attach your resume before sending the email.");
+      // alert("You will now be redirected to Gmail to complete your application. Please remember to attach your resume before sending the email.");
       
-      window.open(gmailComposeURL, '_blank');
+      // window.open(gmailComposeURL, '_blank');
+
+      let data = {
+        applicant:formData.name,
+        email:formData.email,
+        phone:formData.phone,
+        address:`${formData.address}, ${formData.city}, ${formData.pincode}`,
+        position:formData.position,
+        role:formData.roles.join('\n'),
+        resume:formData.resume
+      }
+      console.log("data-check",data)
+      dispatch(applicationForm(data))
     } else {
       console.log('Form has errors');
     }
   };
+
+   // Success handler for file upload
+   const onUploadSuccess = (res) => {
+    console.log('Upload Success:', res);
+    setFormData({
+      ...formData,
+      resume: res.url  // Store the uploaded file URL in formData
+    });
+    setUploading(false);
+  };
+
+  // Error handler for file upload
+  const onUploadError = (err) => {
+    console.error('Upload Error:', err);
+    setUploading(false);
+  };
+
 
   return (
     <section className="py-12 bg-primary_bright min-h-screen flex flex-col items-center justify-center ml-4 mr-4">
@@ -277,13 +318,34 @@ ${formData.name}`);
                 />
                 {errors.pincode && <p className="text-red-300 text-sm mt-1">{errors.pincode}</p>}
               </div>
+                 {/* Resume upload using ImageKit */}
+        <div>
+          <label>Resume:</label>
+          <IKContext
+            publicKey="public_/XVTpespDsIsP/3jv6I6XE5Hy1Q="
+            urlEndpoint="https://ik.imagekit.io/th3ofwc2g9"
+            transformationPosition="path"
+            authenticationEndpoint="http://localhost:5858/imageKit"
+            authenticator={authenticator}
+          >
+            <IKUpload
+              fileName="resume.pdf"
+              onSuccess={onUploadSuccess}
+              onError={onUploadError}
+              onUploadStart={() => setUploading(true)}
+            />
+          </IKContext>
+          {uploading && <p>Uploading...</p>}
+          {errors.resume && <p className="error">{errors.resume}</p>}
+        </div>
+
             </div>
           </div>
           <div className="text-center">
             <button type="submit" className="bg-black font-semibold text-white py-2 px-6 rounded-lg hover:bg-accent_red transition duration-300">
               Submit Application
             </button>
-            <p className="text-sm text-accent_red mt-4 font-semibold">* Please remember to attach your resume to the email after submitting this form.</p>
+            <p className="text-sm text-accent_red mt-4 font-semibold">* Don't forget to upload your resume with this form.</p>
           </div>
         </form>
       </div>

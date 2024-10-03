@@ -17,6 +17,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
     "framer-motion": "^11.3.24",
+    "imagekitio-react": "^4.2.0",
     "jodit-pro-react": "^4.1.13",
     "jodit-react": "^4.1.2",
     "lucide-react": "^0.427.0",
