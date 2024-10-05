@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { applicationForm } from '../../state/Forms/Action';
 import { IKContext, IKUpload } from 'imagekitio-react';
 import authenticator from '../../config/imageKit';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ApplyForPosition = () => {
 
@@ -42,6 +44,7 @@ const ApplyForPosition = () => {
     'Technical Support Engineer', 'Training and Development Manager', 'UI/UX Designer', 'UX Researcher',
     'Video Editor', 'WordPress Developer'
   ];
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -126,32 +129,6 @@ const ApplyForPosition = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-//       const recipient = "neuformtech@gmail.com";
-//       const subject = encodeURIComponent(`${formData.position} Application for ${formData.roles.join(', ')} at Neuform`);
-//       const body = encodeURIComponent(`Greetings Neuform,
-
-// My name is ${formData.name}, and I am excited to apply for the following role(s) ${formData.position} position at Neuform:
-
-// ${formData.roles.join('\n')}
-
-// Name: ${formData.name}
-// Email: ${formData.email}
-// Phone: ${formData.phone}
-// Address: ${formData.address}
-// City: ${formData.city}
-// Pincode: ${formData.pincode}
-
-// Thank you for considering my application. I look forward to the opportunity to discuss how I can contribute to Neuform.
-// Resume Attached :-
-// Best regards,
-// ${formData.name}`);
-
-//       const gmailComposeURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`;
-      
-      // alert("You will now be redirected to Gmail to complete your application. Please remember to attach your resume before sending the email.");
-      
-      // window.open(gmailComposeURL, '_blank');
-
       let data = {
         applicant:formData.name,
         email:formData.email,
@@ -163,6 +140,29 @@ const ApplyForPosition = () => {
       }
       console.log("data-check",data)
       dispatch(applicationForm(data))
+       // Clear the form after successful submission
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      pincode: '',
+      position: '',
+      roles: [],
+      resume: '', // Clear the uploaded resume URL as well
+    });
+      toast.success('Application Submitted !', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+     
+        });
     } else {
       console.log('Form has errors');
     }
@@ -189,6 +189,22 @@ const ApplyForPosition = () => {
     <section className="py-12 bg-primary_bright min-h-screen flex flex-col items-center justify-center ml-4 mr-4">
       <h2 className=" text-2xl md:text-5xl  font-bold mb-8 text-center text-black"> <span className='text-accent_red'>Become</span> a Team Member</h2>
       <div className="w-full max-w-4xl p-8 bg-white rounded-lg shadow-lg ">
+      <div>
+       
+      <ToastContainer
+      position="top-center"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="colored"
+      
+      />
+      </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div 
             className="bg-cover bg-center p-8 rounded-lg border border-2 border-bright_primary"

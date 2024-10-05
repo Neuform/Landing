@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { inquiryForm } from '../../state/Forms/Action';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 const CustomMultiSelect = ({ options, selected, onChange }) => {
@@ -120,6 +121,25 @@ const dispatch = useDispatch()
       }
       console.log('data object',data)
       dispatch(inquiryForm(data))
+      setFormData({
+        name: '',
+    phone: '',
+    email: '',
+    address: '',
+    services: [],
+    message: ''
+      });
+      toast.success('Application Submitted !', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+     
+        });
     }
   };
 
@@ -127,6 +147,19 @@ const dispatch = useDispatch()
     <section className="bg-primary_bright text-black font-semibold py-12 flex items-center justify-center min-h-screen ml-2">
       
       <div className="w-full max-w-3xl p-6 bg-white border border-white rounded-lg shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+      <ToastContainer
+      position="top-center"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="colored"
+      
+      />
         <h2 className="text-2xl mb-8 text-center">Our team will <span className='text-accent_red'>contact</span> you soon</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex space-x-4">
